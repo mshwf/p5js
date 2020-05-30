@@ -2,6 +2,8 @@
 
 <head>
     <script src="p5.min.js"></script>
+    <script src="walker.js"></script>
+
 </head>
 
 <body>
@@ -14,10 +16,15 @@
         var y;
         var distance;
         var val;
+        let walker;
+        let walker2;
         function setup() {
             // mspiral(400, 300);
             createCanvas(400, 400);
+            walker = new Walker(width / 2, height / 2);
+            walker2 = new Walker(400, 150);
             x = 0;
+            pos = createVector(200, 200);
             y = 0;
             sWidth = width;
             sHeight = height;
@@ -27,13 +34,22 @@
             background(51);
         }
         function draw() {
-            frameRate(10);
-            spiral();
+            playWithVectors();
+        }
+        let pos;
+        function playWithVectors() {
+            background(1);
+            walker.update();
+            walker.show();
+
+            walker2.update();
+            walker2.show();
         }
         var sWidth;
         var sHeight;
         var xAxis = true;
         function spiral() {
+            // frameRate(10);
             if (x === width / 2 && y === height / 2)
                 noLoop();
             if (xAxis) {
