@@ -2,200 +2,217 @@
 
 <head>
     <script src="p5.min.js"></script>
-    <script src="walker.js"></script>
-
+    <script src="walkers.js"></script>
 </head>
+<div>
+    <input id="number" type="number" placeholder="balls number" min="1" max="200">
+    <input type="button" value="Spill" onclick="spillBalls()">
+</div>
 
-<body>
+<script>
+    function spillBalls() {
+        var num = document.getElementById("number").value;
+        if (num > 200) {
+            document.getElementById("number").value = 200;
+            num = 200;
+            alert('Sorry, you have to pay for extra balls');
+        }
+        balls = num;
+        setup();
+    }
+    var yoff = 250;
+    var inc = 0.01;
+    var start = 0;
+    var x;
+    var y;
+    var distance;
+    var val;
+    let walkers;
 
-    <script>
-        var yoff = 250;
-        var inc = 0.01;
-        var start = 0;
-        var x;
-        var y;
-        var distance;
-        var val;
-        let walker;
-        let walker2;
-        function setup() {
-            // mspiral(400, 300);
-            createCanvas(400, 400);
-            walker = new Walker(width / 2, height / 2);
-            walker2 = new Walker(400, 150);
-            x = 0;
-            pos = createVector(200, 200);
-            y = 0;
-            sWidth = width;
-            sHeight = height;
-            distance = 10;
-            val = 20;
-            pixelDensity(1);
-            background(51);
-        }
-        function draw() {
-            playWithVectors();
-        }
-        let pos;
-        function playWithVectors() {
-            background(1);
-            walker.update();
-            walker.show();
+    let balls = 10;
+    function setup() {
+        createCanvas(400, 800);
 
-            walker2.update();
-            walker2.show();
+        var mWalkers = [];
+        for (var i = 0; i < balls; i++) {
+            mWalkers.push(new Walker(
+                (random(0, width)),
+                (noise(0, height)),
+                map(noise(i), 0, 1, 5, 50),
+                new Color(random(0, 255), random(0, 255), random(0, 255))
+            ));
         }
-        var sWidth;
-        var sHeight;
-        var xAxis = true;
-        function spiral() {
-            // frameRate(10);
-            if (x === width / 2 && y === height / 2)
-                noLoop();
-            if (xAxis) {
-                if (x < width / 2) {
-                    while (x < sWidth) {
-                        stroke(random(0, 255), random(0, 255), random(0, 255));
-                        strokeWeight(6);
-                        point(x, y);
-                        x += val;
-                    }
-                }
-                else {
-                    while (x > sWidth) {
-                        stroke(random(0, 255), random(0, 255), random(0, 255));
-                        strokeWeight(6);
-                        point(x, y);
-                        x -= val;
-                    }
+        walkers = new Walkers(mWalkers);
+        x = 0;
+        pos = createVector(width / 2, height / 2);
+        y = 0;
+        sWidth = width;
+        sHeight = height;
+        distance = 10;
+        val = 20;
+        pixelDensity(1);
+        background(255, 00, 30);
+    }
+    function draw() {
+        playWithVectors();
+    }
+    let pos;
+    function playWithVectors() {
+        background(1);
+        walkers.show();
+        walkers.update();
+    }
+    var sWidth;
+    var sHeight;
+    var xAxis = true;
+    function spiral() {
+        // frameRate(10);
+        if (x === width / 2 && y === height / 2)
+            noLoop();
+        if (xAxis) {
+            if (x < width / 2) {
+                while (x < sWidth) {
+                    stroke(random(0, 255), random(0, 255), random(0, 255));
+                    strokeWeight(6);
+                    point(x, y);
+                    x += val;
                 }
             }
-
             else {
-                if (y < height / 2) {
-                    while (y < sHeight) {
-                        stroke(random(0, 255), random(0, 255), random(0, 255));
-                        strokeWeight(6);
-                        point(x, y);
-                        y += val;
-                    }
-                }
-                else {
-                    while (y > sHeight) {
-                        stroke(random(0, 255), random(0, 255), random(0, 255));
-                        strokeWeight((6));
-                        point(x, y);
-                        y -= val;
-
-                    }
+                while (x > sWidth) {
+                    stroke(random(0, 255), random(0, 255), random(0, 255));
+                    strokeWeight(6);
+                    point(x, y);
+                    x -= val;
                 }
             }
+        }
 
-            if (!xAxis) {
-                if (y > height / 2)
-                    sHeight = Math.abs(height - sHeight + (val / 2));
-                else
-                    sHeight = Math.abs(height - sHeight - (val / 2));
+        else {
+            if (y < height / 2) {
+                while (y < sHeight) {
+                    stroke(random(0, 255), random(0, 255), random(0, 255));
+                    strokeWeight(6);
+                    point(x, y);
+                    y += val;
+                }
             }
-
             else {
-                if (x > width / 2)
-                    sWidth = Math.abs(width - sWidth + (val / 2));
-                else
-                    sWidth = Math.abs(width - sWidth - (val / 2));
-            }
-            xAxis = !xAxis;
-        }
-
-
-        function randomWalker() {
-            // background(51);
-            stroke(random(0, 255), random(0, 255), random(0, 255));
-            strokeWeight(8);
-            point(x, y);
-
-            var r = floor(random(4));
-            console.log(x);
-            switch (r) {
-                case 0:
-                    if (x < width)
-                        x += distance;
-                    break;
-                case 1:
-                    if (x > 0)
-                        x -= distance;
-                    break;
-                case 2:
-                    if (y <= height)
-                        y += distance;
-                    break;
-                case 3:
-                    if (y >= 0)
-                        y -= distance;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        function playWithDensity() {
-            var yoff = 0;
-            loadPixels();
-
-            for (var y = 0; y < height; y++) {
-
-                var xoff = 0;
-                for (var x = 0; x < width; x++) {
-                    var index = (x + y * width) * 4;
-                    var r = noise(xoff, yoff);
-                    pixels[index + 0] = noise(xoff, 5) * 255;
-                    pixels[index + 1] = noise(random(xoff) + 100) * 255;
-                    pixels[index + 2] = noise() * 255;
-                    pixels[index + 3] = 255;
-                    xoff += inc;
-                }
-                xoff += inc;
-            }
-            updatePixels();
-        }
-
-        function playWithPixels() {
-            loadPixels();
-            for (var y = 0; y < height; y++) {
-
-                for (var x = 0; x < width; x++) {
-                    var index = (x + y * width) * 4;
-                    pixels[index + 0] = y;
-                    pixels[index + 1] = random(255);
-                    pixels[index + 2] = random(255);
-                    pixels[index + 3] = y * y;
+                while (y > sHeight) {
+                    stroke(random(0, 255), random(0, 255), random(0, 255));
+                    strokeWeight((6));
+                    point(x, y);
+                    y -= val;
 
                 }
             }
-            updatePixels();
         }
-        function worm() {
-            tint(255, 127); // Display at half opacity
 
-            background(255);
-            stroke(255);
-            noFill();
-            beginShape();
-            var xoff = start;
+        if (!xAxis) {
+            if (y > height / 2)
+                sHeight = Math.abs(height - sHeight + (val / 2));
+            else
+                sHeight = Math.abs(height - sHeight - (val / 2));
+        }
+
+        else {
+            if (x > width / 2)
+                sWidth = Math.abs(width - sWidth + (val / 2));
+            else
+                sWidth = Math.abs(width - sWidth - (val / 2));
+        }
+        xAxis = !xAxis;
+    }
+
+
+    function randomWalker() {
+        // background(51);
+        stroke(random(0, 255), random(0, 255), random(0, 255));
+        strokeWeight(8);
+        point(x, y);
+
+        var r = floor(random(4));
+        console.log(x);
+        switch (r) {
+            case 0:
+                if (x < width)
+                    x += distance;
+                break;
+            case 1:
+                if (x > 0)
+                    x -= distance;
+                break;
+            case 2:
+                if (y <= height)
+                    y += distance;
+                break;
+            case 3:
+                if (y >= 0)
+                    y -= distance;
+                break;
+
+            default:
+                break;
+        }
+    }
+    function playWithDensity() {
+        var yoff = 0;
+        loadPixels();
+
+        for (var y = 0; y < height; y++) {
+
+            var xoff = 0;
             for (var x = 0; x < width; x++) {
-                stroke(255);
-                var y = noise(xoff) * 100 + height / 2 + sin(xoff) * height / 2;
-                // vertex(x, y);
+                var index = (x + y * width) * 4;
+                var r = noise(xoff, yoff);
+                pixels[index + 0] = noise(xoff, 5) * 255;
+                pixels[index + 1] = noise(random(xoff) + 100) * 255;
+                pixels[index + 2] = noise() * 255;
+                pixels[index + 3] = 255;
                 xoff += inc;
-                fill(color(noise(x * .2) * 500, noise(x) * 50, noise(x) * 50));
-                ellipse(x - 200, y, noise(x) * 100, noise(x) * 100);
             }
-            fill(color('transparent'));
-
-            endShape();
-            start += inc;
+            xoff += inc;
         }
-    </script>
+        updatePixels();
+    }
+
+    function playWithPixels() {
+        loadPixels();
+        for (var y = 0; y < height; y++) {
+
+            for (var x = 0; x < width; x++) {
+                var index = (x + y * width) * 4;
+                pixels[index + 0] = y;
+                pixels[index + 1] = random(255);
+                pixels[index + 2] = random(255);
+                pixels[index + 3] = y * y;
+
+            }
+        }
+        updatePixels();
+    }
+    function worm() {
+        tint(255, 127); // Display at half opacity
+
+        background(255);
+        stroke(255);
+        noFill();
+        beginShape();
+        var xoff = start;
+        for (var x = 0; x < width; x++) {
+            stroke(255);
+            var y = noise(xoff) * 100 + height / 2 + sin(xoff) * height / 2;
+            // vertex(x, y);
+            xoff += inc;
+            fill(color(noise(x * .2) * 500, noise(x) * 50, noise(x) * 50));
+            ellipse(x - 200, y, noise(x) * 100, noise(x) * 100);
+        }
+        fill(color('transparent'));
+
+        endShape();
+        start += inc;
+    }
+</script>
 </body>
 
 </html>
