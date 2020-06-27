@@ -3,47 +3,33 @@
 <head>
     <script src="p5.min.js"></script>
     <script src="mover.js"></script>
-    <script src="randomVectors.js"></script>
+    <script src="density.js"></script>
+    <script src="ExperimentVectors.js"></script>
     <script src="mygame.js"></script>
     <script src="spiral.js"></script>
     <script src="worm.js"></script>
-    <script src="walkers/walkers.js"></script>
-    <script src="walkers/playWalker.js"></script>
+    <script src="balls/walkers.js"></script>
+    <script src="balls/balls.js"></script>
+    <script src="mover_force.js"></script>
+    <script src="my_mover_force.js"></script>
 </head>
-<div>
+<div id="balls-sec" style="display: none;">
     <input id="number" type="number" placeholder="balls number" min="1" max="200">
     <input type="button" value="Spill" onclick="spillBalls()">
 </div>
 
 <script>
-    function spillBalls() {
-        var num = document.getElementById("number").value;
-        if (num > 200) {
-            document.getElementById("number").value = 200;
-            num = 200;
-            alert('Sorry, you have to pay for extra balls');
-        }
-        balls = num;
-        setup();
-    }
-
+    var game = new MyGame();
     function setup() {
         createCanvas(800, 800);
         background(51);
-        setup_randomWalker();
-        setup_randomVectors();
-        // setup_PlayWithAcc();
-        // setup_mygame();
-
+        game.setup();
     }
 
 
     function draw() {
-        randomVectors();
-        // playWithAcc();
-        // randomWalker();
+        game.play();
     }
-
 
 </script>
 </body>
