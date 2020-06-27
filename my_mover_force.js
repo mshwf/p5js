@@ -45,12 +45,12 @@ class MyMoverForce {
 
 
 
-let moverF;
+let myMoverF;
 class MyMoverForceGame {
 
     setup() {
         createCanvas(400, 400);
-        moverF = new MyMoverForce(200, 200);
+        myMoverF = new MyMoverForce(200, 200);
 
     }
     play() {
@@ -58,14 +58,14 @@ class MyMoverForceGame {
 
         if (mouseIsPressed) {
             let wind = createVector(5, 0);
-            moverF.applyForce(wind);
+            myMoverF.applyForce(wind);
         }
 
         let gravity = createVector(0, 1);
-        moverF.applyForce(gravity);
+        myMoverF.applyForce(gravity);
 
-        moverF.update();
-        moverF.edges();
-        moverF.show();
+        myMoverF.update();
+        myMoverF.edges();
+        myMoverF.show();
     }
 }
