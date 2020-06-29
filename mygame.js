@@ -51,7 +51,7 @@ class MyGame {
     edges() {
         if (this.pos.y >= sqrInitY) {
             this.pos.y = sqrInitY;
-            this.vel.y *= -1;
+            this.vel.y *= -2;
         }
     }
 }
