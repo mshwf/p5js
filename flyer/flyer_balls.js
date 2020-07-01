@@ -1,21 +1,23 @@
-class Balls {
+class BallsGame {
+    constructor() {
+        this.setup();
+    }
     setup() {
-        document.getElementById("balls-sec").style.display = "block";
+        document.getElementById("balls-sec").style.display = "table";
         background(0);
-        var mWalkers = [];
+        var mBalls = [];
         for (var i = 0; i < balls; i++) {
-            mWalkers.push(new Walker(
-                (random(0, width)),
-                (noise(0, height)),
+            mBalls.push(new Ball(
+                (random(width)),
+                (noise(height)),
                 map(noise(i), 0, 1, 5, 50),
                 new Color(random(0, 255), random(0, 255), random(0, 255))
             ));
         }
-        balls = new Walkers(mWalkers);
+        balls = new Balls(mBalls);
         x = 0;
         pos = createVector(width / 2, height / 2);
         y = 0;
-        distance = 10;
         val = 20;
         pixelDensity(1);
     }
@@ -26,9 +28,7 @@ class Balls {
     }
 }
 
-let balls;
 let balls = 10;
-var distance;
 let pos;
 var x;
 var y;
