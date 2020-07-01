@@ -7,10 +7,10 @@ class Color {
 }
 
 class Ball {
-    constructor(x, y, rad, color) {
+    constructor(x, y, dim, color) {
         this.pos = createVector(x, y);
         this.vel = createVector(-1, -1);
-        this.rad = rad;
+        this.dim = dim;
         this.color = color;
     }
 }
@@ -26,20 +26,20 @@ class Balls {
 
         balls.forEach(ball => {
 
-            if (ball.pos.x >= width - ball.rad / 2)
+            if (ball.pos.x >= width - ball.dim / 2)
                 ball.vel.x += -.1;
-            if (ball.pos.x <= 0 + ball.rad / 2)
+            if (ball.pos.x <= 0 + ball.dim / 2)
                 ball.vel.x += .1;
 
-            if (ball.pos.y >= height - ball.rad / 2)
+            if (ball.pos.y >= height - ball.dim / 2)
                 ball.vel.y += -.5;
-            if (ball.pos.y <= 0 + ball.rad / 2)
+            if (ball.pos.y <= 0 + ball.dim / 2)
                 ball.vel.y += .5;
 
             ball.pos.add(ball.vel);
 
-            if (this.registered.some(p => p.x >= (ball.pos.x - ball.rad / 2) && p.x < (ball.pos.x + ball.rad / 2) &&
-                p.y >= (ball.pos.y - ball.rad / 2) && p.y < (ball.pos.y + ball.rad / 2))) {
+            if (this.registered.some(p => p.x >= (ball.pos.x - ball.dim / 2) && p.x < (ball.pos.x + ball.dim / 2) &&
+                p.y >= (ball.pos.y - ball.dim / 2) && p.y < (ball.pos.y + ball.dim / 2))) {
                 ball.pos.x += -1;
                 ball.pos.y += -1;
             }
@@ -51,7 +51,7 @@ class Balls {
         stroke(0);
         strokeWeight(0);
         balls.forEach(ball => {
-            ellipse(ball.pos.x, ball.pos.y, ball.rad);
+            ellipse(ball.pos.x, ball.pos.y, ball.dim);
             fill(ball.color.r, ball.color.g, ball.color.b);
         });
     }

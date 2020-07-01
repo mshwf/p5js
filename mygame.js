@@ -3,7 +3,7 @@ var lineY;
 var side = 10;
 class MyGame {
     setup() {
-        this.balls = new Balls();
+        this.bubbles = new Balls();
 
         background(51);
         side = 10;
@@ -11,7 +11,7 @@ class MyGame {
         sqrInitY = lineY - 13;
         this.resetPos();
         stroke(255, 255, 255);
-        this.balls.setup();
+        this.bubbles.setup();
     }
     resetPos() {
         this.acc = createVector(10, 10);
@@ -21,7 +21,7 @@ class MyGame {
 
     play() {
         background(51);
-        this.balls.play();
+        this.bubbles.play();
         line(0, lineY, width, lineY);
         square(this.pos.x, this.pos.y, side);
 

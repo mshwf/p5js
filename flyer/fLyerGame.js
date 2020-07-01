@@ -1,7 +1,7 @@
 var sqrInitY;
 var lineY;
 var side;
-var balls_count = 1;
+var balls_count = 3;
 class FLyerGame {
     setup() {
         this.setupBalls();
@@ -91,21 +91,21 @@ class FLyerGame {
         this.intersect();
     }
     intersect() {
-        var cSquare = createVector(this.pos.x + (side / 2), this.pos.y + (side / 2));
         for (var i = 0; i < balls.length; i++) {
-            var ball = balls[i];
+            let ball = balls[i];
+            var rad = ball.dim / 2;
 
-            var minX = Math.min(this.pos.x, ball.pos.x - ball.rad / 2);
-            var maxX = Math.max(this.pos.x + side, ball.pos.x + ball.rad / 2);
+            var left = Math.min(this.pos.x, ball.pos.x - rad);
+            var right = Math.max(this.pos.x + side, ball.pos.x + rad);
 
-            var minY = Math.min(this.pos.y, ball.pos.y - ball.rad / 2);
-            var maxY = Math.max(this.pos.y + side, ball.pos.y + ball.rad / 2);
-            var touched = (ball.rad / 2) + (side / 2);
+            var top = Math.min(this.pos.y, ball.pos.y - rad);
+            var down = Math.max(this.pos.y + side, ball.pos.y + rad);
+            var touched = rad + (side / 2);
 
             var colorDiv = document.getElementById('colorDiv');
-            if (maxX - minX > maxY - minY) {
+            if (right - left > down - top) {
                 //take x
-                if (Math.abs((ball.pos.x - (ball.rad / 2)) - this.pos.x) <= touched) {
+                if (Math.abs(ball.pos.x - (this.pos.x + (side / 2))) <= touched) {
                     colorDiv.style.backgroundColor = "rgb(" + random(255) + ", " + random(255) + ", " + random(255) + ")";
                 }
                 else {
@@ -115,7 +115,7 @@ class FLyerGame {
 
             else {
                 //take y
-                if (Math.abs((ball.pos.y - (.5 * ball.rad)) - this.pos.y) <= touched) {
+                if (Math.abs(ball.pos.y - (this.pos.y + (side / 2))) <= touched) {
                     colorDiv.style.backgroundColor = "rgb(" + random(255) + ", " + random(255) + ", " + random(255) + ")";
                 }
                 else {
