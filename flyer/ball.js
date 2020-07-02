@@ -14,6 +14,7 @@ class Ball {
         this.color = color;
     }
 }
+var lastFill;
 var balls;
 class Balls {
     constructor(_balls) {
@@ -48,11 +49,10 @@ class Balls {
     }
 
     show() {
-        stroke(0);
-        strokeWeight(0);
         balls.forEach(ball => {
             ellipse(ball.pos.x, ball.pos.y, ball.dim);
             fill(ball.color.r, ball.color.g, ball.color.b);
+            lastFill = ball.color;
         });
     }
 }

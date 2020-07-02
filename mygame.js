@@ -1,12 +1,12 @@
 var sqrInitY;
 var lineY;
-var side = 10;
+var sq_side = 10;
 class MyGame {
     setup() {
         this.bubbles = new Balls();
 
         background(51);
-        side = 10;
+        sq_side = 10;
         lineY = height - 20;
         sqrInitY = lineY - 13;
         this.resetPos();
@@ -23,7 +23,7 @@ class MyGame {
         background(51);
         this.bubbles.play();
         line(0, lineY, width, lineY);
-        square(this.pos.x, this.pos.y, side);
+        square(this.pos.x, this.pos.y, sq_side);
 
         this.acc.set(0, .15);
         this.vel.add(this.acc);
@@ -83,8 +83,8 @@ class MyGame {
             this.vel.y *= 0.2;
         }
 
-        if (this.pos.x >= width - side) {
-            this.pos.x = width - side;
+        if (this.pos.x >= width - sq_side) {
+            this.pos.x = width - sq_side;
             this.vel.x *= -0.2;
         }
 
